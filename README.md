@@ -44,6 +44,38 @@ This plugin is best suited for situations where viewport units are only used spa
 
 If you need to target a large set of HTML objects matching one or more CSS paths, the plugin will generate inline markup for each element and will recalculate these values when browser windows are resized and thus potentially consume more resources, especially in older browsers.
 
+For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:
+
+<pre>
+	/* Exactly 80% of viewport height irrespective of page length
+	* most common use case, translates to 
+	* #my-element { height: 80vh; }
+	*/
+	$('#my-element').viewportScale('80vh');
+</pre>
+
+<pre>
+	/* Exactly 50% of viewport height and 25% of viewport width 
+	* Translates to:
+	* #my-element { height: 50vh; width: 25vw; }
+	*/
+	$('#my-element').viewportScale('50vh,25vw');
+</pre>
+
+For other supported combinations, use object notation:
+
+<pre>
+	/* Exactly 50% of viewport height and 25% of viewport width 
+	* Translates to:
+	* #my-element { max-height: 30vw; width: 20vw; font-size: 2vw; }
+	*/
+	$('#my-element').viewportScale({
+		'max-height': '30vw',
+		 width: '20vw',
+		'font-size': '2vw'
+	});
+</pre>
+
 <h4>HTML Snippet:</h4>
 <pre>
 &lt;section class="half-width-height"&gt;
