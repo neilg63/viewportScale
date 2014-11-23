@@ -5,7 +5,7 @@ This simple jQuery plugin lets you apply responsive viewport size units (vw, vh,
 
 The plugin does not detect browser support for viewport units, as some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.
 
-As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari < 7 (no support), iOS Safari < 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only. For IE, you may use conditional tags to include additional scripts not required for other browsers. For iOS Safari, you may need to use jQuery deprecated $.browser (object) or other third-party browser detection scripts.
+As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari < 7 (no support), iOS Safari < 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only. For IE, you may use conditional tags to include additional scripts not required for other browsers. For iOS Safari, you may need to use jQuery's deprecated $.browser object (available for jQuery 1.9+ via a plugin) or other third-party browser detection scripts.
 
 <p>A  <a href="http://multifaceted.info/demos/viewport-scale/demo/index.html">simple demo</a> shows you the desired effects</p>
 
