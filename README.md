@@ -87,7 +87,7 @@ For other supported combinations, use object notation:
 &lt;/section&gt;
 
 &lt;section class="third-width-fixed-aspect"&gt;
-	&lt;p&gt; Fixed aspect ratio with font-size relative to screen width. &lt;/p&gt;
+	&lt;p&gt; Fixed aspect ratio relative to screen width only. &lt;/p&gt;
 &lt;/section&gt;
 
 </pre>
