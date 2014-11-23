@@ -1,7 +1,5 @@
+/* viewportScale v0.1 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
-	/*
-	* @author: Neil Gardner neilgardner1963@gmail.com 14/11/2014
-	 */
 
 	$.fn.viewportScale = function(units){
 		
@@ -15,6 +13,7 @@
 				props={},
 				unitRgx = new RegExp('\\b(\\d+(\\.\\d+)*)\\s*(v([wh]|max|min))');
 
+			// Fetch window size on initial page load and subsequent resizing
 			var gaugeWindowSize = function() {
 				// support for ViewportSize plugin
 				if (window.viewportSize) {
@@ -32,6 +31,7 @@
 				}
 			}
 		
+			// Translate percent value to a window-size based pixel unit
 			var translatePc = function(pc,wUnit) {
 				if ($.isNumeric(pc)) {
 					return Math.ceil((pc/100) * wUnit) + 'px';
@@ -39,6 +39,7 @@
 				return false; 
 			}
 
+			// Calculate size based on window height and/or width
 			var resetSize = function(){
 				var attrs={},prop, u, ws;
 				gaugeWindowSize();
@@ -69,6 +70,7 @@
 				element.css(attrs);
 			}
 			
+			// Match units, vw, vh, vmax or vmin with integer or float numerals
 			var matchUnit = function(str) {
 				var parts = str.split(','),prop = {unit: 'none',num:null};
 				if (str.length>1) {
@@ -88,6 +90,7 @@
 				return prop;
 			}
 		
+			// Set up for all matched elements
 			var init = function() {
 				numEls = element.length,
 				valid = false;
