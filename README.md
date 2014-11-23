@@ -1,9 +1,9 @@
 jQuery viewportScale
 =============
 
-This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete or non-existent support for these properties. See <em><a href="http://www.w3.org/TR/css3-values" rel="external">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties.
+This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete CSS3 support. See <em><a href="http://www.w3.org/TR/css3-values" rel="external">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties.
 
-In <em>fluid design</em>, the width of HTML elements can always be calculated in percent as long as the document body has a known percentage value, although percentage width and height are always relative to their parent element's width and height. However, until recently without Javascript it was impossible to scale an element based on the viewport height alone. This technique has become very common in mobile designs, e.g. where a page section is designed to occupy the whole screen height and width, but more content is available by scrolling up or down. Viewport height (vh) units are the answer.
+In <em>fluid design</em>, the width of HTML elements can always be calculated in percent as long as the document body has a known percentage value, although percentage width and height are always relative to their parent element's width and height. However, until recently without Javascript it was impossible to scale an element based on viewport height alone. This technique has become very common in mobile designs, e.g. where a page section is designed to occupy the whole screen height and width, but more content is available by scrolling up or down. Viewport height (vh) units are the answer.
 
 When applied to <em>font-sizes</em>, viewport width (vw) is a lightweight alternative to <strong>fit-text</strong> scripts to ensure text always occupies approximately the same proportion of the screen width and thus take up the same number of lines.
 
