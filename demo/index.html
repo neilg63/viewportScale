@@ -129,7 +129,11 @@ article {
 <article id="explanation">
 <h1>jQuery viewportScale</h1>
 
-<p>This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete or non-existent support for these properties. See <em><a href="http://www.w3.org/TR/css3-values">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties. </p>
+<p>This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete CSS3 support. See <em><a href="http://www.w3.org/TR/css3-values">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties.</p>
+
+<p>In <em>fluid design</em>, the width of HTML elements can always be calculated in percent as long as the document body has a known percentage value, although percentage width and height are always relative to their parent element's width and height. However, until recently without Javascript it was impossible to scale an element based on viewport height alone. This technique has become very common in mobile designs, e.g. where a page section is designed to occupy the whole screen height and width, but more content is available by scrolling up or down. Viewport height (vh) units are the answer.</p>
+
+<p>When applied to <em>font-sizes</em>, viewport width (vw) is a lightweight alternative to <strong>fit-text</strong> scripts to ensure text always occupies approximately the same proportion of the screen width and thus take up the same number of lines.</p>
 
 <p>The plugin does not detect browser support for viewport units, as some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.</p>
 
@@ -142,7 +146,7 @@ article {
 <a id="user-content-" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 
 </h3>
-<p>Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascripts windowc.clientWidth to be exactly 100vw. However, most desktop browsers substract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
+<p>Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascript's window.outerWidth to be exactly 100vw. However, most desktop browsers substract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
 <a href="https://github.com/tysonmatanich/viewportSize">viewportSize</a>. This is not necessary if you require only viewport heights (vh) or do not mind discrepencies in viewport width when scrollbars are always present.</p>
 
 <p></p><h2>
@@ -168,7 +172,7 @@ article {
 
 <p>The plugin does not support other common properties, as these can be derived from the above using relative units, e.g. padding and margin in em's are relative the font-size and layout properties in percent are relative to their parent elements.</p>
 
-<p>The plugin will recalculate when the browser window is resized or screen orientation is flipped.</p>
+<p>The plugin will recalculate these values when the browser window is resized or the screen orientation is flipped.</p>
 
 <p></p><h3>
 <a id="user-content-sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample usage:</h3><h3>
@@ -179,12 +183,46 @@ article {
 
 <p>If you need to target a large set of HTML objects matching one or more CSS paths, the plugin will generate inline markup for each element and will recalculate these values when browser windows are resized and thus potentially consume more resources, especially in older browsers.</p>
 
+<p>For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:</p>
+
+<pre>    /* Exactly 80% of viewport height irrespective of page length
+    * most common use case, translates to 
+    * #my-element { height: 80vh; }
+    */
+    $('#my-element').viewportScale('80vh');
+</pre>
+
+<pre>    /* Exactly 50% of viewport height and 25% of viewport width 
+    * Translates to:
+    * #my-element { height: 50vh; width: 25vw; }
+    */
+    $('#my-element').viewportScale('50vh,25vw');
+</pre>
+
+<p>For other supported combinations, use object notation:</p>
+
+<pre>    /* Height, width and font-size scaled to match viewport width only 
+    * Translates to:
+    * #my-element { max-height: 30vw; width: 20vw; font-size: 2vw; }
+    */
+    $('#my-element').viewportScale({
+        'max-height': '30vw',
+         width: '20vw',
+        'font-size': '2vw'
+    });
+</pre>
+
 <h4>
 <a id="user-content-html-snippet" class="anchor" href="#html-snippet" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Snippet:</h4>
 
 <pre>&lt;section class="half-width-height"&gt;
     &lt;p&gt; Scalable text 2% of viewport height or width, whichever is the largest&lt;/p&gt;
 &lt;/section&gt;
+
+&lt;section class="third-width-fixed-aspect"&gt;
+    &lt;p&gt; Fixed aspect ratio with font-size relative to screen width. &lt;/p&gt;
+&lt;/section&gt;
+
 </pre>
 
 <h4>
