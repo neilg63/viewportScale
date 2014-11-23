@@ -81,15 +81,15 @@ section.third-width-fixed-aspect {
 viewportSize.getWidth();
 	
 /* simple set up for only height and width using vh and vw units respectively */
-$('section.half-width-height').imageFitCover('50vh,50vw');
+$('section.half-width-height').viewportScaleer('50vh,50vw');
 
 /* For other units and combinations use object notation */
-$('section.half-width-height p').imageFitCover({
+$('section.half-width-height p').viewportScaleer({
 	'font-size': '2vmax'
 });
 
 /* For other units and combinations use object notation */
-$('section.third-width-fixed-aspect').imageFitCover({
+$('section.third-width-fixed-aspect').viewportScaleer({
 	'width': '33.333vw',
 	'height': '33.333vw',
 });
