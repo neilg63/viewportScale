@@ -1,7 +1,7 @@
 jQuery viewportScale
 =============
 
-This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete CSS3 support. See <em><a href="http://www.w3.org/TR/css3-values" rel="external">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties.
+This simple jQuery plugin (compatible with jQuery 1.7+ and 2.*.x) lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete CSS3 support. See <em><a href="http://www.w3.org/TR/css3-values" rel="external">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties.
 
 In <em>fluid design</em>, the width of HTML elements can always be calculated in percent as long as the document body has a known percentage value, although percentage width and height are always relative to their parent element's width and height. However, until recently without Javascript it was impossible to scale an element based on viewport height alone. This technique has become very common in mobile designs, e.g. where a page section is designed to occupy the whole screen height and width, but more content is available by scrolling up or down. Viewport height (vh) units are the answer.
 
@@ -17,7 +17,7 @@ As of November 2014, the latest official version of all major browsers support v
 
 <h2>Correct Viewport Width<h3>
 
-Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascript's window.outerWidth to be exactly 100vw. However, most desktop browsers substract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
+Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascript's window.outerWidth to be exactly 100vw. However, most desktop browsers subtract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
 <a href="https://github.com/tysonmatanich/viewportSize">viewportSize</a>. This is not necessary if you require only viewport heights (vh) or do not mind discrepencies in viewport width when scrollbars are always present.
 
 <h2>How it works<h3>
