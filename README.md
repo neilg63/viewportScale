@@ -85,6 +85,11 @@ For other supported combinations, use object notation:
 &lt;section class="half-width-height"&gt;
 	&lt;p&gt; Scalable text 2% of viewport height or width, whichever is the largest&lt;/p&gt;
 &lt;/section&gt;
+
+&lt;section class="third-width-fixed-aspect"&gt;
+	&lt;p&gt; Fixed aspect ratio with font-size relative to screen width. &lt;/p&gt;
+&lt;/section&gt;
+
 </pre>
 
 <h4>Stylesheet:</h4>
