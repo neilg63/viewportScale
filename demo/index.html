@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>jQuery viewport Scale Demo</title>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="../dist/viewportSize-min.js"></script>
+<script src="../dist/viewport-scale.js"></script>
+<style>
+
+body {
+	background-color: white;
+	color: #222233;
+}
+
+header {
+	text-align: center;
+	border: dashed 2px #999999;
+}
+
+header h1 {
+	margin: 0.125em auto;
+	padding: 0.125em 0;
+}
+
+article {
+	clear: both;
+	margin: 1em auto;
+	padding: 3em;
+	border: dashed 1px #666699;
+}
+
+#main {
+	width: 100%;
+	text-align: center;
+	clear: both;
+	padding: 1em;
+}
+
+#main .box {
+	position: relative;
+	margin: 1em;
+	overflow: hidden;
+	border: solid 2px #008800;
+	float: left;
+	text-align: center;
+	padding: 0;
+}
+
+#main .box ul li, #main .box p {
+	margin: 0.25em 1em;
+}
+
+#main .box p {
+	padding: 0.5em 0;
+}
+
+#main .box ul li {
+	text-align: left;
+}
+
+#main .quarter-height {
+	background: #3311aa;
+	color: white;
+	width: 25vw;
+	height: 25vh;
+}
+
+
+#main .quarter-width-height {
+	background: #aa3333;
+	color: white;
+	width: 25vw;
+	height: 25vw;
+}
+
+#main .fifth-width-height-vmax-fontsize {
+	background: #22aa33;
+	color: white;
+	width: 20vmax;
+	height: 20vmax;
+	font-size: 1.5vmax;
+}
+
+#main .full-height {
+	background: #cc33cc;
+	color: white;
+	width: 20vw;
+	height: 100vh;
+}
+
+
+</style>
+
+
+</head>
+
+<body>
+<header>
+	<h1>viewportScale Plugin Example</h1>
+</header>
+<section id="main" class="semantic-class-name fit-cover">
+	
+	<div class="box quarter-height">
+		<p>25% height, 25% width</p>
+	</div>
+	
+	<div class="box quarter-width-height">
+		<p>33.33% height, 20% width</p>
+	</div>
+	
+	<div class="box fifth-width-height-vmax-fontsize">
+		<ul>
+			<li>font-size: 1% of larger of viewport height or width (vmax)</li>
+			<li>width: 20% viewport width</li>
+			<li>height: 20% viewport width</li>
+			
+		</ul>
+	</div>
+
+</section>
+
+<article id="explanation">
+
+<p>This simple jQuery plugin lets you sizes image within their container in the same way as the new CSS <em>object-fit: cover</em> property in all modern browsers that do not yet support it natively.</p>
+
+
+<p>All images within the targeted container object will fill its entire area without changing their aspect ratio. The replaced content is sized to maintain its aspect ratio while filling the element’s entire content box: its concrete object size is resolved as a cover constraint against the element’s used width and height.</p>
+
+<p>As of November 2014 the latest Webkit browsers and Firefox 36 support object-fit. However, Internet Explorer, Firefox before version 36 and older versions of Safari prior to version 7.1 d not.</p>
+
+<p>This plugin only implements object-fit: cover property for img tags wrapped in targeted containers. Other plugins, most notably jquery object fit, <a href="https://github.com/schmidsi/jquery-object-fit">https://github.com/schmidsi/jquery-object-fit</a>, provide more complete support for object-fit by implementing other values such as fill, contain and scaled-down and work directly on the HTML object that should respond to object-fit rather than its container. Our approach is less flexible, but more efficient. Inline styles are added only to browsers that do not support object-fit via a simple test on initial page load.</p>
+
+<p>Sample usage:</p>
+
+<p>HTML Snippet:</p>
+
+<pre>&lt;figure class="inage-cover"&gt;
+    &lt;img src="/path-to-images-folder/image.jpg" width="800" height="600" /&gt;
+&lt;/figure&gt;
+</pre>
+
+<p>Style sheet:</p>
+
+<pre>figure.image-cover {
+  position: relative;
+  width: 50%;
+  height: 20vh; /* viewport hieght, not supported in IE8*/
+  overflow: hidden; /* important */
+}
+
+figure.image-cover img {
+  position: relative; /*must have a non-static position to work in browsers that do not support object-fit*/
+  width: 100%; /* initial value overriden by object-fit and/or plugin */
+  height: 100%; /* initial value overriden by object-fit and/or plugin */
+  object-fit: cover; /* works in latest Webkit browsers + FF 36+ */
+}
+</pre>
+
+<p>Javascript in jQuery context:</p>
+
+<pre>$('figure.image-fit').imageFitCover();
+</pre>
+</article>
+
+<script>
+
+	$(function() {
+		/* Only use if accurate cross-browser viewport width is required
+		 * Otherwise scrollbars will be subtracted from viewport width in 
+		 * desktop browsers. If required, include viewportSize-min.js first
+		*/
+		viewportSize.getWidth();
+
+	   $('.quarter-height').viewportScale('25vh,25vw');
+		 
+		 $('.quarter-width-height').viewportScale({
+			 height: '25vw',
+			 width: '25vw'
+		 });
+		 
+		 $('.fifth-width-height-vmax-fontsize').viewportScale({
+			 height: '20vmax',
+			 width: '20vmax'
+		 });
+		 
+		 $('.fifth-width-height-vmax-fontsize ul').viewportScale({
+			 'font-size': '1.5vmax'
+		 });
+		 
+	});
+
+	
+</script>
+</body>
+
+</html>
