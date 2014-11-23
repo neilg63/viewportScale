@@ -16,7 +16,7 @@ Before the introduction of CSS viewport units, browsers did not consistently dis
 
 <h2>How it works<h3>
 
-On initial page load the script gauges the correct window height and width (optionally with the aid of viewportSize to gauge correct viewport width without scrollbars). It then translates these into values into pixels for the following properties:
+On initial page load the script gauges the correct window height and width (optionally with the aid of viewportSize to gauge correct viewport width without scrollbars). It then translates these into pixel values for the following properties:
 
 <ol>
 	<li>width</li>
@@ -33,6 +33,8 @@ On initial page load the script gauges the correct window height and width (opti
 </ol>
 
 The plugin does not support other common properties, as these can be derived from the above using relative units, e.g. padding and margin in em's are relative the font-size and layout properties in percent are relative to their parent elements.
+
+The plugin will recalculate when the browser window is resized or screen orientation is flipped.
 
 <h3>Sample usage:<h3>
 
