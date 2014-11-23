@@ -139,21 +139,11 @@ article {
 
 <p>As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari &lt; 7 (no support), iOS Safari &lt; 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only. For IE, you may use conditional tags to include additional scripts not required for other browsers. For iOS Safari, you may need to use jQuery's deprecated $.browser object (available for jQuery 1.9+ via a plugin) or other third-party browser detection scripts.</p>
 
-<p>A  <a href="http://multifaceted.info/demos/viewport-scale/demo/index.html">simple demo</a> shows you the desired effects</p>
-
-<p></p><h2>
-<a id="user-content-correct-viewport-width" class="anchor" href="#correct-viewport-width" aria-hidden="true"><span class="octicon octicon-link"></span></a>Correct Viewport Width</h2><h3>
-<a id="user-content-" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-
-</h3>
+<h2>Correct Viewport Width</h2>
 <p>Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascript's window.outerWidth to be exactly 100vw. However, most desktop browsers substract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
 <a href="https://github.com/tysonmatanich/viewportSize">viewportSize</a>. This is not necessary if you require only viewport heights (vh) or do not mind discrepencies in viewport width when scrollbars are always present.</p>
 
-<p></p><h2>
-<a id="user-content-how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h2><h3>
-<a id="user-content--1" class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-
-</h3>
+<h2>How it works</h2>
 <p>On initial page load the script gauges the correct window height and width (optionally with the aid of viewportSize to gauge correct viewport width without scrollbars). It then translates these into pixel values for the following properties:</p>
 
 <ol class="task-list">
@@ -174,11 +164,8 @@ article {
 
 <p>The plugin will recalculate these values when the browser window is resized or the screen orientation is flipped.</p>
 
-<p></p><h3>
-<a id="user-content-sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample usage:</h3><h3>
-<a id="user-content--2" class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<h3>Sample usage:</h3>
 
-</h3>
 <p>This plugin is best suited for situations where viewport units are only used sparingly for a few strategic layout elements or text that must fit within those elements (a great alternative to Fit-Text).</p>
 
 <p>If you need to target a large set of HTML objects matching one or more CSS paths, the plugin will generate inline markup for each element and will recalculate these values when browser windows are resized and thus potentially consume more resources, especially in older browsers.</p>
@@ -212,8 +199,7 @@ article {
     });
 </pre>
 
-<h4>
-<a id="user-content-html-snippet" class="anchor" href="#html-snippet" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Snippet:</h4>
+<h4>HTML Snippet:</h4>
 
 <pre>&lt;section class="half-width-height"&gt;
     &lt;p&gt; Scalable text 2% of viewport height or width, whichever is the largest&lt;/p&gt;
@@ -225,8 +211,7 @@ article {
 
 </pre>
 
-<h4>
-<a id="user-content-stylesheet" class="anchor" href="#stylesheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stylesheet:</h4>
+<h4>Stylesheet:</h4>
 
 <pre>section.half-width-height {
   position: relative;
@@ -252,8 +237,7 @@ section.third-width-fixed-aspect {
 
 </pre>
 
-<h4>
-<a id="user-content-javascript-in-jquery-context" class="anchor" href="#javascript-in-jquery-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javascript in jQuery context:</h4>
+<h4>Javascript in jQuery context:</h4>
 
 <pre>    
 /* Optionally include and instantiate viewportSize to add window.viewportSize.getWidth() method */
