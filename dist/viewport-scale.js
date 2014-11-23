@@ -117,6 +117,10 @@
 								switch (key) {
 									case 'width':
 									case 'height':
+									case 'top':
+									case 'bottom':
+									case 'left':
+									case 'right':
 									case 'min-width':
 									case 'max-width':
 									case 'min-height':
