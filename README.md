@@ -65,7 +65,7 @@ For basic usage when applying viewport height or width to CSS height or width pr
 For other supported combinations, use object notation:
 
 <pre>
-	/* Exactly 50% of viewport height and 25% of viewport width 
+	/* Height, width and font-size scaled to match viewport width only 
 	* Translates to:
 	* #my-element { max-height: 30vw; width: 20vw; font-size: 2vw; }
 	*/
