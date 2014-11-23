@@ -78,7 +78,7 @@ article {
 	background: #22aa33;
 	color: white;
 	width: 20vmax;
-	height: 20vmax;
+	height: 30vmax;
 	font-size: 1.5vmax;
 }
 
@@ -102,18 +102,27 @@ article {
 <section id="main" class="semantic-class-name fit-cover">
 	
 	<div class="box quarter-height">
-		<p>25% height, 25% width</p>
+		<p>Always proportional viewport width and height</p>
+		<ul>
+			<li>width: 25% viewport width</li>
+			<li>height: 25% viewport height</li>
+		</ul>
 	</div>
 	
 	<div class="box quarter-width-height">
-		<p>33.33% height, 20% width</p>
+		<p>Fixed aspect ratio</p>
+		<ul>
+			<li>width: 25% view width</li>
+			<li>height: 25% viewport width</li>
+		</ul>
 	</div>
 	
 	<div class="box fifth-width-height-vmax-fontsize">
+		<p>Text scaled to fit within fixed aspect-ratio element</p>
 		<ul>
-			<li>font-size: 1% of larger of viewport height or width (vmax)</li>
+			<li>font-size: 1.5% of larger of viewport height or width (vmax)</li>
 			<li>width: 20% viewport width</li>
-			<li>height: 20% viewport width</li>
+			<li>height: 30% viewport width</li>
 			
 		</ul>
 	</div>
@@ -121,45 +130,115 @@ article {
 </section>
 
 <article id="explanation">
+<h1>jQuery viewportScale</h1>
 
-<p>This simple jQuery plugin lets you sizes image within their container in the same way as the new CSS <em>object-fit: cover</em> property in all modern browsers that do not yet support it natively.</p>
+<p>This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete or non-existent support for these properties. See <em><a href="http://www.w3.org/TR/css3-values">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties. </p>
 
+<p>The plugin does not detect browser support for viewport units, as some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.</p>
 
-<p>All images within the targeted container object will fill its entire area without changing their aspect ratio. The replaced content is sized to maintain its aspect ratio while filling the element’s entire content box: its concrete object size is resolved as a cover constraint against the element’s used width and height.</p>
+<p>As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari &lt; 7 (no support), iOS Safari &lt; 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only. For IE, you may use conditional tags to include additional scripts not required for other browsers. For iOS Safari, you may need to use jQuery's deprecated $.browser object (available for jQuery 1.9+ via a plugin) or other third-party browser detection scripts.</p>
 
-<p>As of November 2014 the latest Webkit browsers and Firefox 36 support object-fit. However, Internet Explorer, Firefox before version 36 and older versions of Safari prior to version 7.1 d not.</p>
+<p>A  <a href="http://multifaceted.info/demos/viewport-scale/demo/index.html">simple demo</a> shows you the desired effects</p>
 
-<p>This plugin only implements object-fit: cover property for img tags wrapped in targeted containers. Other plugins, most notably jquery object fit, <a href="https://github.com/schmidsi/jquery-object-fit">https://github.com/schmidsi/jquery-object-fit</a>, provide more complete support for object-fit by implementing other values such as fill, contain and scaled-down and work directly on the HTML object that should respond to object-fit rather than its container. Our approach is less flexible, but more efficient. Inline styles are added only to browsers that do not support object-fit via a simple test on initial page load.</p>
+<p></p><h2>
+<a id="user-content-correct-viewport-width" class="anchor" href="#correct-viewport-width" aria-hidden="true"><span class="octicon octicon-link"></span></a>Correct Viewport Width</h2><h3>
+<a id="user-content-" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 
-<p>Sample usage:</p>
+</h3>
+<p>Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascripts windowc.clientWidth to be exactly 100vw. However, most desktop browsers substract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include 
+<a href="https://github.com/tysonmatanich/viewportSize">viewportSize</a>. This is not necessary if you require only viewport heights (vh) or do not mind discrepencies in viewport width when scrollbars are always present.</p>
 
-<p>HTML Snippet:</p>
+<p></p><h2>
+<a id="user-content-how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h2><h3>
+<a id="user-content--1" class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 
-<pre>&lt;figure class="inage-cover"&gt;
-    &lt;img src="/path-to-images-folder/image.jpg" width="800" height="600" /&gt;
-&lt;/figure&gt;
+</h3>
+<p>On initial page load the script gauges the correct window height and width (optionally with the aid of viewportSize to gauge correct viewport width without scrollbars). It then translates these into pixel values for the following properties:</p>
+
+<ol class="task-list">
+    <li>width</li>
+    <li>height</li>
+    <li>top</li>
+    <li>bottom</li>
+    <li>left</li>
+    <li>right</li>
+    <li>min-width</li>
+    <li>min-height</li>
+    <li>max-width</li>
+    <li>max-height</li>
+    <li>font-size</li>
+</ol>
+
+<p>The plugin does not support other common properties, as these can be derived from the above using relative units, e.g. padding and margin in em's are relative the font-size and layout properties in percent are relative to their parent elements.</p>
+
+<p>The plugin will recalculate when the browser window is resized or screen orientation is flipped.</p>
+
+<p></p><h3>
+<a id="user-content-sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample usage:</h3><h3>
+<a id="user-content--2" class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+
+</h3>
+<p>This plugin is best suited for situations where viewport units are only used sparingly for a few strategic layout elements or text that must fit within those elements (a great alternative to Fit-Text).</p>
+
+<p>If you need to target a large set of HTML objects matching one or more CSS paths, the plugin will generate inline markup for each element and will recalculate these values when browser windows are resized and thus potentially consume more resources, especially in older browsers.</p>
+
+<h4>
+<a id="user-content-html-snippet" class="anchor" href="#html-snippet" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Snippet:</h4>
+
+<pre>&lt;section class="half-width-height"&gt;
+    &lt;p&gt; Scalable text 2% of viewport height or width, whichever is the largest&lt;/p&gt;
+&lt;/section&gt;
 </pre>
 
-<p>Style sheet:</p>
+<h4>
+<a id="user-content-stylesheet" class="anchor" href="#stylesheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stylesheet:</h4>
 
-<pre>figure.image-cover {
+<pre>section.half-width-height {
   position: relative;
-  width: 50%;
-  height: 20vh; /* viewport hieght, not supported in IE8*/
-  overflow: hidden; /* important */
+  width: 50vw; /* viewport width, not supported in IE8*/
+  height: 50vh; /* viewport height, not supported in IE8*/
+    border: dashed 3px #999999;
+    background-color: #ffff66;
+    margin: 5%;
 }
 
-figure.image-cover img {
-  position: relative; /*must have a non-static position to work in browsers that do not support object-fit*/
-  width: 100%; /* initial value overriden by object-fit and/or plugin */
-  height: 100%; /* initial value overriden by object-fit and/or plugin */
-  object-fit: cover; /* works in latest Webkit browsers + FF 36+ */
+section.half-width-height p {
+  font-size: 2vmax;
 }
+
+section.third-width-fixed-aspect {
+  position: relative;
+  width: 33.333vw; /* viewport width, not supported in IE8*/
+  height: 33.333vh; /* viewport height, not supported in IE8*/
+    border: dashed 3px #999999;
+    background-color: #9999ff;
+    margin: 5%;
+}
+
 </pre>
 
-<p>Javascript in jQuery context:</p>
+<h4>
+<a id="user-content-javascript-in-jquery-context" class="anchor" href="#javascript-in-jquery-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javascript in jQuery context:</h4>
 
-<pre>$('figure.image-fit').imageFitCover();
+<pre>    
+/* Optionally include and instantiate viewportSize to add window.viewportSize.getWidth() method */
+
+viewportSize.getWidth();
+    
+/* simple set up for only height and width using vh and vw units respectively */
+$('section.half-width-height').viewportScale('50vh,50vw');
+
+/* For other units and combinations use object notation */
+$('section.half-width-height p').viewportScale({
+    'font-size': '2vmax'
+});
+
+/* For other units and combinations use object notation */
+$('section.third-width-fixed-aspect').viewportScale({
+    'width': '33.333vw',
+    'height': '33.333vw',
+});
+
 </pre>
 </article>
 
@@ -180,7 +259,7 @@ figure.image-cover img {
 		 });
 		 
 		 $('.fifth-width-height-vmax-fontsize').viewportScale({
-			 height: '20vmax',
+			 height: '30vmax',
 			 width: '20vmax'
 		 });
 		 
