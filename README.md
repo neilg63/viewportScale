@@ -1,7 +1,11 @@
 jQuery viewportScale
 =============
 
-This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete or non-existent support for these properties. See <em><a href="http://www.w3.org/TR/css3-values" rel="external">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties. 
+This simple jQuery plugin lets you apply responsive viewport size units (vw, vh, vmax and vmin) with browsers with incomplete or non-existent support for these properties. See <em><a href="http://www.w3.org/TR/css3-values" rel="external">W3C: CSS Values and Units Module Level 3</a></em> for more details on these properties.
+
+In <em>fluid design</em>, the width of HTML elements can always be calculated in percent as long as the document body has a known percentage value, although percentage width and height are always relative to their parent element's width and height. However, until recently without Javascript it was impossible to scale an element based on the viewport height alone. This technique has become very common in mobile designs, e.g. where a page section is designed to occupy the whole screen height and width, but more content is available by scrolling up or down. Viewport height (vh) units are the answer.
+
+When applied to <em>font-sizes</em>, viewport width (vw) is a lightweight alternative to <strong>fit-text</strong> scripts to ensure text always occupies approximately the same proportion of the screen width and thus take up the same number of lines.
 
 The plugin does not detect browser support for viewport units, as some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.
 
@@ -36,7 +40,7 @@ On initial page load the script gauges the correct window height and width (opti
 
 The plugin does not support other common properties, as these can be derived from the above using relative units, e.g. padding and margin in em's are relative the font-size and layout properties in percent are relative to their parent elements.
 
-The plugin will recalculate when the browser window is resized or screen orientation is flipped.
+The plugin will recalculate these values when the browser window is resized or the screen orientation is flipped.
 
 <h3>Sample usage:<h3>
 
