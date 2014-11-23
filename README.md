@@ -38,7 +38,7 @@ The plugin will recalculate when the browser window is resized or screen orienta
 
 <h3>Sample usage:<h3>
 
-This plugin is best suited for situations where viewport units are only used sparingly for a few strategic layout elements or text that must sized to fit within those elements.
+This plugin is best suited for situations where viewport units are only used sparingly for a few strategic layout elements or text that must fit within those elements (a great alternative to Fit-Text).
 
 If you need to target a large set of HTML objects matching one or more CSS paths, the plugin will generate inline markup for each element and will recalculate these values when browser windows are resized and thus potentially consume more resources, especially in older browsers.
 
