@@ -4,7 +4,13 @@
 <meta charset="UTF-8" />
 <title>jQuery viewport Scale Demo</title>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- /* Only use if accurate cross-browser viewport width is required
+		 * Otherwise scrollbars will be subtracted from viewport width in 
+		 * desktop browsers. If required, include viewportSize-min.js first
+		*/
+-->
 <script src="../dist/viewportSize-min.js"></script>
+<!--  Load after jQuery (required) and viewportSize (if required) -->
 <script src="../dist/viewport-scale.js"></script>
 <style>
 
@@ -79,11 +85,24 @@ article {
 	font-size: 1.5vmax;
 }
 
-#main .full-height {
-	background: #cc33cc;
-	color: white;
-	width: 20vw;
-	height: 100vh;
+
+.full-width {
+	width: 100%;
+	clear: both;
+	padding: 1 0;
+	margin: 0;
+	text-align: center;
+}
+
+.fit-text {
+	position: relative;
+	background: #ddddee;
+	color: black;
+	width: 60vw;
+	height: 10vw;
+	font-size: 2vw;
+	border: solid 3px #cccccc;
+	margin: 0 auto;
 }
 
 
@@ -120,10 +139,15 @@ article {
 			<li>font-size: 1.5% of larger of viewport height or width (vmax)</li>
 			<li>width: 20vmax</li>
 			<li>height: 30vmax</li>
-			
 		</ul>
 	</div>
+</section>
 
+<section class="full-width">
+	<div class="fit-text">
+		<h3>Fit-Text Example, translated size: <span class="calc-size"></span></h3>
+		<p>Base font-size in region based on 2vw, translated size: <span class="calc-size"></span></p>
+	</div>
 </section>
 
 <article id="explanation">
@@ -264,11 +288,34 @@ $('section.third-width-fixed-aspect').viewportScale({
 <script>
 
 	$(function() {
-		/* Only use if accurate cross-browser viewport width is required
-		 * Otherwise scrollbars will be subtracted from viewport width in 
-		 * desktop browsers. If required, include viewportSize-min.js first
-		*/
-		viewportSize.getWidth();
+		
+		var prevW = 0;
+		
+		var calcSizes = $('.calc-size'),numCalcSizes = calcSizes.length
+		
+		var calcFontSize = function(el) {
+			if (el.length>0) {
+				var fs = el.parent().css('font-size');
+				el.html(fs.replace(/\.(\d\d?)\d*px/g,".$1px"));
+			}
+		}
+		
+		var calcFontSizes = function() {
+			var w = viewportSize.getWidth();
+			if (w >= (prevW+10) || w <= (prevW-10)) {
+				var i=0;
+				prevW = w;
+				if (numCalcSizes>0) {
+					for (; i < numCalcSizes;i++) {
+						calcFontSize(calcSizes.eq(i));
+					}
+					$(window).on('resize',calcFontSizes);
+				}
+			}
+		}
+		
+			calcFontSizes();
+			
 
 	   $('.quarter-height').viewportScale('25vh,25vw');
 		 
@@ -281,6 +328,12 @@ $('section.third-width-fixed-aspect').viewportScale({
 			 height: '30vmax',
 			 width: '20vmax',
 			 'font-size': '1.5vmax'
+		 });
+		 
+		 $('.fit-text').viewportScale({
+			 height: '10vw',
+			 width: '60vw',
+			 'font-size': '2vw'
 		 });
 		 		 
 	});
