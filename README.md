@@ -143,10 +143,10 @@ $('section.third-width-fixed-aspect').viewportScale({
 
 <h4>Resize Events</h4>
 
-The plugin responds to window resizing and changes in screen orientation. If you using this plugin within a resize event handler, you may want to disable this feature. just add false as the second parameter.
+The plugin responds to window resizing and changes in screen orientation. If you use this plugin within a resize event handler, you may want to disable this feature, by just adding <em>false</em> as the second parameter.
 
 <pre>
-	
+			/* only set on initial page load  or in response to other triggers */
 			$('#my-container').viewPortScale({'font-size': '3vw'}, false);
 	
 </pre>
