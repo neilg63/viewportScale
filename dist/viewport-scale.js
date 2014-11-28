@@ -1,7 +1,7 @@
-/* viewportScale v0.1 | Author: Neil Gardner, 2014 | License: GPL */
+/* viewportScale v0.2 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
 
-	$.fn.viewportScale = function(units){
+	$.fn.viewportScale = function(units,resizeOn){
 		
 			var element = this, 
 				numEls = 0,
@@ -141,7 +141,9 @@
 				}
 				if (valid) {
 					resetSize();
-					$(window).on('resize',resetSize);
+					if (resizeOn !== false) {
+						$(window).on('resize.viewport',resetSize);
+					}
 				}
 			}
 			
