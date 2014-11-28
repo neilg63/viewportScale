@@ -42,7 +42,7 @@ The plugin does not support other common properties, as these can be derived fro
 
 The plugin will recalculate these values when the browser window is resized or the screen orientation is flipped.
 
-<h3>Sample usage:<h3>
+<h3>Sample usage:</h3>
 
 This plugin is best suited for situations where viewport units are only used sparingly for a few strategic layout elements or text that must fit within those elements (a great alternative to Fit-Text).
 
@@ -141,7 +141,7 @@ $('section.third-width-fixed-aspect').viewportScale({
 
 </pre>
 
-<h3>Resize Events</h3>
+<h4>Resize Events</h4>
 
 The plugin responds to window resizing and changes in screen orientation. If you using this plugin within a resize event handler, you may want to disable this feature. just add false as the second parameter.
 
