@@ -65,6 +65,12 @@ header h1 {
 	padding: 0.125em 0;
 }
 
+header h2 {
+	font-size: 2vw;
+	margin: 0.125em auto;
+	padding: 0 0 0.25em 0;
+}
+
 #viewport-info {
 	display: inline-block;
 	color: #9999aa;
@@ -171,6 +177,7 @@ article#explanation pre {
 <body>
 <header>
 	<h1>viewportScale Plugin Example <span id="viewport-info"></span></h1>
+	<h2><a href="https://github.com/neilg63/viewportScale" rel="external">Get it from GitHub !</a></h2>
 </header>
 <section id="main" class="semantic-class-name fit-cover">
 	
@@ -429,16 +436,19 @@ To suppress this test and always apply inline translated pixel-based styles, you
  		 });
 		 
 		 setTimeout(function(){
-			 var msg = "";
-			 if ($('body').hasClass('vh-supported')) {
-				 msg = "Good viewport unit support";
-			 } else if ($('body').hasClass('vh-checked') == false) {
-				 msg = "Viewport unit check failed";
-			 } else {
-			 		msg = "Incomplete viewport unit support";
+			 var msg = "",vui=$('#viewport-info');
+			 if (vui.length>0) {
+				 vui.hide();
+				 if ($('body').hasClass('vh-supported')) {
+					 msg = "Good viewport unit support";
+				 } else if ($('body').hasClass('vh-checked') == false) {
+					 msg = "Viewport unit check failed";
+				 } else {
+				 		msg = "Incomplete viewport unit support";
+				 }
+				 vui.html(msg).fadeIn(1000);
 			 }
-			 $('#viewport-info').html(msg);
-		 },2000);
+		 },500);
 		 		 
 	});
 
