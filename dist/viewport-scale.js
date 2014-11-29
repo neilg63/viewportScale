@@ -104,7 +104,7 @@
 			
 			// Match units, vw, vh, vmax or vmin with integer or float numerals
 			var matchUnit = function(str) {
-				var parts = str.split(','),prop = {unit: 'none',num:null};
+				var prop = {unit: 'none',num:null};
 				if (str.length>1) {
 					var match = str.match(unitRgx);
 					if ($.isNumeric(match[1])) {
