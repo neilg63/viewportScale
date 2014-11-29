@@ -27,7 +27,7 @@ Before the introduction of CSS viewport units, browsers did not consistently dis
 <h3>Requirements</h3>
 	
 <ol>
-	<li>jQuery 1.7+, jQuery 2.* and hopefully jQUery 3.*</li>
+	<li>jQuery 1.7+, jQuery 2.* and hopefully jQuery 3.*</li>
 	<li>Optionally load the viewportSize script first. This adds a new window.viewportSize object</li>
 	<li>Load the viewportScale plugin </li>
 	<li>Use it in your custom javascript within a jQuery context.</li>
