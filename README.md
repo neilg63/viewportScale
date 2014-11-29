@@ -15,7 +15,7 @@ Some common browsers such as IOS Safari before version 7 and Internet Explorer b
 
 For a practical example please view this simple <a href="http://multifaceted.info/demos/viewport-scale/demo/">demo</a> .
 
-As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari < 7 (no support), iOS Safari < 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only. For IE, you may use conditional tags to include additional scripts not required for other browsers. For iOS Safari, you may need to use jQuery's deprecated $.browser object (available for jQuery 1.9+ via a plugin) or other third-party browser detection scripts.
+As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari < 7 (no support), iOS Safari < 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only.
 
 <p>A  <a href="http://multifaceted.info/demos/viewport-scale/demo/index.html">simple demo</a> shows you the desired effects</p>
 
@@ -60,6 +60,12 @@ The plugin will recalculate these values when the browser window is resized or t
 This plugin is best suited for situations where viewport units are only used sparingly for a few strategic layout elements or text that must fit within those elements (a great alternative to Fit-Text).
 
 If you need to target a large set of HTML objects matching one or more CSS paths, the plugin will generate inline markup for each element and will recalculate these values when browser windows are resized and thus potentially consume more resources, especially in older browsers.
+
+<h4>Options:</h4>
+<dl>
+	<dt>resize:</dt><dd>Default = <strong>true</strong>, to disable automatic resizing of inline styles applied by this plugin on window resize enter <strong>false</strong>.</dd>
+	<dt>detect:</dt><dd>Default = <strong>'strict'</strong>, unless only simplified string syntax in used in first parameter, in which case only a basic test is run. Use 'skip' to suppress browser detection altogether.</dd>
+</dl>
 
 For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:
 
@@ -164,14 +170,20 @@ The plugin responds to window resizing and changes in screen orientation. If you
 	
 </pre>
 
-<h4>Suppress Browser Detection</h4>
+<p>TThe detection function temporarily creates an empty div, to which it applies a height of 100vh, a font-size of 2vh and in strict mode a width of 50vmax. After appending it to the body it checks its height matches the correct viewport height (outerHeight) and its font-size translated into pixels is approximately 1/50 of that. In strict mode it will detect vmax, which is not supported in Internet Explorer 9-11. In basic mode, where only vw and vh units are required, IE9 to 11 should pass the test.</p>
+<p>By contrast iOS Safari fails to support vh correctly and thus before version 8 failed both tests.</p>
 
-The detection function temporarily creates an empty div, to which it applies a height of 100vh and a font-size of 2vh. After appending it to the body it checks its height matches the correct viewport height (outerHeight) and its font-size translated into pixels is approximately 1/50 of that. This is the main limitation for using viewport units consistently in browsers that provide only partial support. 
+<p>To suppress this test and always apply inline translated pixel-based styles, you may specify detect <em>mode</em> as the second options parameter of viewportScale(). When using simplified string syntax in the first parameter, the plugin will only run a basic test e.g.</p>
 
-To suppress this test and always apply inline translated pixel-based styles, you may add <em>true</em> as the third parameter of viewportScale() e.g.
+<pre>
+			/* Apply basic test only, as vmax and vmin are not required */
+			$('#my-container').viewPortScale({'font-size': '3vw',{detect:'basic'}}, {detect:'basic'});
+	
+</pre>
+
 <pre>
 			/* Always apply irrespective of browser support, skip browser detection */
-			$('#my-container').viewPortScale({'font-size': '3vw'}, true,true);
+			$('#my-container').viewPortScale({'font-size': '3vw'}, {detect:'skip'});
 	
 </pre>
 
