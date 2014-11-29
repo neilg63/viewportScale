@@ -71,6 +71,16 @@ header h2 {
 	padding: 0 0 0.25em 0;
 }
 
+header h3 {
+	font-size: 1.8vmax;
+	margin: 0.125em auto;
+	padding: 0 0 1em 0;
+	transform: scaleX(1.25);
+	-webkit-transform: scaleX(1.25);
+	-moz-transform: scaleX(1.25);
+	-ms-transform: scaleX(1.25);
+}
+
 #viewport-info {
 	display: inline-block;
 	color: #9999aa;
@@ -176,8 +186,9 @@ article#explanation pre {
 
 <body>
 <header>
-	<h1>viewportScale Plugin Example <span id="viewport-info"></span></h1>
+	<h1>viewportScale Plugin Example</h1>
 	<h2><a href="https://github.com/neilg63/viewportScale" rel="external">Get it from GitHub !</a></h2>
+	<h3 id="viewport-info"></h3>
 </header>
 <section id="main" class="semantic-class-name fit-cover">
 	
@@ -450,7 +461,7 @@ To suppress this test and always apply inline translated pixel-based styles, you
 					 msg = "Viewport unit check failed";
 				 } else {
 				 		msg = "Incomplete viewport unit support";
-						strInfo = "Your browser does not supports viewport units and may need this plugin to harness the full power of this new CSS standard";
+						strInfo = "Your browser does not support <em>viewport units</em> and may need this plugin to harness the full power of this new CSS standard";
 				 }
 				 vui.html(msg).fadeIn(1000);
 				 bsi.html(strInfo);
