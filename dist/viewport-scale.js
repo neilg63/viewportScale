@@ -1,7 +1,7 @@
-/* viewportScale v0.3.1 | Author: Neil Gardner, 2014 | License: GPL */
+/* viewportScale v0.4.0 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
 
-	$.fn.viewportScale = function(units,resizeOn,skipDetection){
+	$.fn.viewportScale = function(units,options){
 		
 			var element = this, 
 				numEls = 0,
@@ -14,6 +14,11 @@
 				unitRgx = new RegExp('\\b(\\d+(\\.\\d+)*)\\s*(v([wh]|max|min))'),
 				supported = false,
 				_gauged = false;
+			
+			var settings = $.extend({
+					resize: true,
+          detect: 'strict',
+      }, options );
 
 			var detectSupport = function() {
 				var b = $('body');
@@ -22,6 +27,9 @@
 					gaugeWindowSize();
 					_gauged = true;
 					if (div.length>0) {
+						if (typeof units == 'string') {
+							settings.detect = 'basic';
+						}
 						b.append(div);
 						var attrs = {position:'fixed',height:'100vh','font-size':'2vh',width:'50vmax','z-index':-2000,padding:0}, ds=0;
 						div.css(attrs);
@@ -35,7 +43,7 @@
 									ds = ds - 0; 
 									fract = (wh / ds);
 									supported = (fract > 49 && fract < 51);
-									if (supported) {
+									if (settings.detect != 'basic' && supported) {
 										ds = div.outerWidth();
 										supported = ds > ((wmax / 2)*0.95) && ds < ((wmax / 2)*1.05);
 									}
@@ -180,7 +188,7 @@
 					}
 					if (valid) {
 						resetSize();
-						if (resizeOn !== false) {
+						if (settings.resize !== false) {
 							$(window).on('resize.viewport',resetSize);
 						}
 					}
@@ -190,7 +198,7 @@
 			var init = function() {
 				numEls = element.length;
 				if (numEls>0) {
-					if (!skipDetection) {
+					if (settings.detect != 'skip') {
 						detectSupport();
 					} 
 					if (!supported) {
