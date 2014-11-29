@@ -164,3 +164,14 @@ The plugin responds to window resizing and changes in screen orientation. If you
 	
 </pre>
 
+<h4>Suppress Browser Detection</h4>
+
+The detection function temporarily creates an empty div, to which it applies a height of 100vh and a font-size of 2vh. After appending it to the body it checks its height matches the correct viewport height (outerHeight) and its font-size translated into pixels is approximately 1/50 of that. This is the main limitation for using viewport units consistently in browsers that provide only partial support. 
+
+To suppress this test and always apply inline translated pixel-based styles, you may had <em>true</em> as the third parameter of vieportScale() e.g.
+<pre>
+			/* Always apply irrespective of browser support, skip browser detection */
+			$('#my-container').viewPortScale({'font-size': '3vw'}, true,true);
+	
+</pre>
+
