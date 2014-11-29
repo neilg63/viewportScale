@@ -1,4 +1,4 @@
-/* viewportScale v0.3 | Author: Neil Gardner, 2014 | License: GPL */
+/* viewportScale v0.3.1 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
 
 	$.fn.viewportScale = function(units,resizeOn,skipDetection){
@@ -12,25 +12,33 @@
 				wmax=0,
 				props={},
 				unitRgx = new RegExp('\\b(\\d+(\\.\\d+)*)\\s*(v([wh]|max|min))'),
-				supported = false;
+				supported = false,
+				_gauged = false;
 
 			var detectSupport = function() {
 				var b = $('body');
 				if (b.hasClass('vh-checked') == false) {
 					var div = $('<div />'),className = 'vh-checked';
-					wh = $(window).outerHeight();
+					gaugeWindowSize();
+					_gauged = true;
 					if (div.length>0) {
 						b.append(div);
-						div.css({position:'fixed',height:'100vh','font-size':'2vh','z-index':-2000});
-						supported = div.outerHeight() > (wh * 0.95) && div.outerHeight() < (wh * 1.05);
+						var attrs = {position:'fixed',height:'100vh','font-size':'2vh',width:'50vmax','z-index':-2000,padding:0}, ds=0;
+						div.css(attrs);
+						ds = div.outerHeight();
+						supported = ds > (wh * 0.95) && ds < (wh * 1.05);
 						if (supported) {
-							var fsPx = div.css('font-size'),fract = 0;
-							if (fsPx) {
-								fsPx = fsPx.replace(/[a-z]/g,'');
-								if ($.isNumeric(fsPx)) {
-									fsPx = fsPx - 0; 
-									fract = (wh / fsPx);
+							ds = div.css('font-size'),fract = 0;
+							if (ds) {
+								ds = ds.replace(/[a-z]/g,'');
+								if ($.isNumeric(ds)) {
+									ds = ds - 0; 
+									fract = (wh / ds);
 									supported = (fract > 49 && fract < 51);
+									if (supported) {
+										ds = div.outerWidth();
+										supported = ds > ((wmax / 2)*0.95) && ds < ((wmax / 2)*1.05);
+									}
 								}
 							}
 						}
@@ -50,10 +58,11 @@
 				// support for ViewportSize plugin
 				if (window.viewportSize) {
 					ww = window.viewportSize.getWidth();
+					wh = window.viewportSize.getHeight();
 				} else {
 					ww = $(window).outerWidth();
+					wh = $(window).outerHeight();
 				}
-				wh = $(window).outerHeight();
 				if (wh > ww) {
 					wmax = wh;
 					wmin = ww;
@@ -74,8 +83,9 @@
 			// Calculate size based on window height and/or width
 			var resetSize = function(){
 				var attrs={},prop, u, ws;
-				gaugeWindowSize();
-				
+				if (!_gauged) {
+					gaugeWindowSize();
+				}
 				for (key in props) {
 					prop = props[key];
 					ws = false
@@ -99,6 +109,7 @@
 						}
 					}
 				}
+				_gauged = false;
 				element.css(attrs);
 			}
 			
