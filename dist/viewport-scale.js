@@ -120,63 +120,69 @@
 				}
 				return prop;
 			}
+			
+			var apply = function() {
+				var valid = false;
+				if (typeof units == 'string') {
+					units = units.toLowerCase();
+					var parts = units.split(','),i=0,prop;
+					for (; i < parts.length;i++) {
+						if (parts[i].length>1) {
+							prop = matchUnit(parts[i]);
+							switch (prop.unit) {
+								case 'vw':
+									props.width = prop;
+									valid = true;
+									break;
+								case 'vh':
+									props.height = prop;
+									valid = true;
+									break;	
+							}
+						}
+					}
+				} else if (typeof units == 'object') {
+						var strVal,prop;
+						for (key in units) {
+							strVal = units[key];
+							switch (key) {
+								case 'width':
+								case 'height':
+								case 'top':
+								case 'bottom':
+								case 'left':
+								case 'right':
+								case 'min-width':
+								case 'max-width':
+								case 'min-height':
+								case 'max-height':
+								case 'font-size':
+									prop = matchUnit(strVal);	
+									if (prop.unit != 'none') {
+										props[key] = prop;
+										valid = true;
+									}
+									break;
+							}
+						}
+					}
+					if (valid) {
+						resetSize();
+						if (resizeOn !== false) {
+							$(window).on('resize.viewport',resetSize);
+						}
+					}
+			}
 		
 			// Set up for all matched elements
 			var init = function() {
-				numEls = element.length,
-				valid = false;
+				numEls = element.length;
 				if (numEls>0) {
 					if (!skipDetection) {
 						detectSupport();
-					}
-					if (!supported && typeof units == 'string') {
-						units = units.toLowerCase();
-						var parts = units.split(','),i=0,prop;
-						for (; i < parts.length;i++) {
-							if (parts[i].length>1) {
-								prop = matchUnit(parts[i]);
-								switch (prop.unit) {
-									case 'vw':
-										props.width = prop;
-										valid = true;
-										break;
-									case 'vh':
-										props.height = prop;
-										valid = true;
-										break;	
-								}
-							}
-						}
-					} else if (typeof units == 'object') {
-							var strVal,prop;
-							for (key in units) {
-								strVal = units[key];
-								switch (key) {
-									case 'width':
-									case 'height':
-									case 'top':
-									case 'bottom':
-									case 'left':
-									case 'right':
-									case 'min-width':
-									case 'max-width':
-									case 'min-height':
-									case 'max-height':
-									case 'font-size':
-										prop = matchUnit(strVal);	
-										if (prop.unit != 'none') {
-											props[key] = prop;
-											valid = true;
-										}
-										break;
-								}
-							}
-						}
-				}
-				if (valid) {
-					resetSize();
-					if (resizeOn !== false) {
-						$(window).on('resize.viewport',resetSize);
+					} 
+					if (!supported) {
+						apply();
 					}
 				}
 			}
