@@ -288,7 +288,7 @@ article#explanation pre {
 <h4>Options:</h4>
 <dl>
 	<dt>resize:</dt><dd>Default = <strong>true</strong>, to disable automatic resizing of inline styles applied by this plugin on window resize enter <strong>false</strong>.</dd>
-	<dt>detect:</dt><dd>Default = <strong>'strict'</strong>, unless only simplified string syntax is used in the first parameter, in which case only a basic test is run. Use 'skip' to suppress browser detection altogether.</dd>
+	<dt>detect:</dt><dd>Default = <strong>'full'</strong>, unless only simplified string syntax is used in the first parameter, in which case only a basic test is run. Use 'skip' to suppress browser detection altogether. To enforce full suppprt detection even with simplified vw/vh syntax, specify <em>'strict'</em> for this option.</dd>
 </dl>
 <p>For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:</p>
 
@@ -442,13 +442,13 @@ $('section.third-width-fixed-aspect').viewportScale({
 		
 			calcFontSizes();
 			
-
- 	   $('.quarter-height').viewportScale('25vh,25vw');
 	 
  		 $('.quarter-width-height').viewportScale({
  			 height: '25vw',
  			 width: '25vw'
  		 });
+		 
+		 $('.quarter-height').viewportScale('25vh,25vw');
 	 
  		 $('.fifth-width-height-vmax-fontsize').viewportScale({
  			 height: '30vmax',
@@ -468,8 +468,15 @@ $('section.third-width-fixed-aspect').viewportScale({
 				 vui.hide();
 				 bsi = $('#browser-support-info');
 				 if ($('body').hasClass('vh-supported')) {
-					 msg = "Good viewport unit support";
+					 var extent = "Basic";
 					 strInfo = "Your browser supports viewport units correctly. However, other browsers may need this plugin.";
+						if ($('body').hasClass('vmax-supported')) {
+							extent = "Full"
+							strInfo += " <em>vmax </em> and  <em>vmin</em> units also supported";
+						} else {
+							strInfo += " Only <em>vh</em> and <em>vw</em> are supported.";
+						}
+						msg = extent + " viewport unit support";
 				 } else if ($('body').hasClass('vh-checked') == false) {
 					 msg = "Viewport unit check failed";
 				 } else {
