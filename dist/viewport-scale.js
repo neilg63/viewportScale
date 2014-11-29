@@ -15,7 +15,7 @@
 				supported = false;
 
 			var detectSupport = function() {
-				var div = div = $('<div />'),className = 'vh-checked', b = $('body');
+				var div = $('<div />'),className = 'vh-checked', b = $('body');
 				if (b.hasClass('vh-checked') == false) {
 					wh = $(window).outerHeight();
 					if (div.length>0) {
