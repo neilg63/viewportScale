@@ -1,6 +1,6 @@
 {
   "name": "viewportScale",
-  "version": "0.3",
+  "version": "0.4.1",
   "description": "Simple jQuery plugin to support viewport units (vw,vh,vmax,vmin) in older browsers.",
   "author": "https://github.com/neilg63",
   "license": "GPL",
