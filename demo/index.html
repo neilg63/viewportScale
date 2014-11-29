@@ -25,8 +25,15 @@ header {
 }
 
 header h1 {
+	font-size: 3vw;
 	margin: 0.125em auto;
 	padding: 0.125em 0;
+}
+
+#viewport-info {
+	display: inline-block;
+	color: #9999aa;
+	margin: 0 0 0 2em;
 }
 
 article {
@@ -113,7 +120,7 @@ article {
 
 <body>
 <header>
-	<h1>viewportScale Plugin Example</h1>
+	<h1>viewportScale Plugin Example <span id="viewport-info"></span></h1>
 </header>
 <section id="main" class="semantic-class-name fit-cover">
 	
@@ -159,13 +166,26 @@ article {
 
 <p>When applied to <em>font-sizes</em>, viewport width (vw) is a lightweight alternative to <strong>fit-text</strong> scripts to ensure text always occupies approximately the same proportion of the screen width and thus take up the same number of lines.</p>
 
-<p>The plugin does not detect browser support for viewport units, as some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.</p>
+<h3>Browser Support Detection</h3>
 
-<p>As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari &lt; 7 (no support), iOS Safari &lt; 7.1, you may target this plugin only at users of these browsers and let modern browsers use CSS only. For IE, you may use conditional tags to include additional scripts not required for other browsers. For iOS Safari, you may need to use jQuery's deprecated $.browser object (available for jQuery 1.9+ via a plugin) or other third-party browser detection scripts.</p>
+<p>The plugin can optionally run a basic viewport unit support test. This will only run once as it adds two class names to the HTML body tag.</p>
+
+<p>Some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. The test ensures a hidden element sized in <em>vh</em> matches its expected size based on viewport height. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.</p>
+
+<p>As of November 2014, the latest official version of all major browsers support vw, vh, vmax and vmin. However, if you need to support IE8, IE9 (partial support), Safari &lt; 7 (no support), iOS Safari &lt; 7.1.</p>
 
 <h2>Correct Viewport Width</h2>
 <p>Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascript's window.outerWidth to be exactly 100vw. However, most desktop browsers substract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
 <a href="https://github.com/tysonmatanich/viewportSize">viewportSize</a>. This is not necessary if you require only viewport heights (vh) or do not mind discrepencies in viewport width when scrollbars are always present.</p>
+
+<h3>Requirements<h3>
+	
+<ol>
+	<li>jQuery 1.7+, jQuery 2.* and hopefully jQUery 3.*</li>
+	<li>Optionally load the viewportSize script first. This adds a new window.viewportSize object</li>
+	<li>Load the viewportScale plugin </li>
+	<li>Use it in your custom javascript within a jQuery context.</li>
+</ol>
 
 <h2>How it works</h2>
 <p>On initial page load the script gauges the correct window height and width (optionally with the aid of viewportSize to gauge correct viewport width without scrollbars). It then translates these into pixel values for the following properties:</p>
@@ -196,7 +216,8 @@ article {
 
 <p>For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:</p>
 
-<pre>    /* Exactly 80% of viewport height irrespective of page length
+<pre>
+	 /* Exactly 80% of viewport height irrespective of page length
     * most common use case, translates to 
     * #my-element { height: 80vh; }
     */
@@ -281,7 +302,6 @@ $('section.third-width-fixed-aspect').viewportScale({
     'width': '33.333vw',
     'height': '33.333vw',
 });
-
 </pre>
 
 <h4>Resize Events</h4>
@@ -328,24 +348,36 @@ The plugin responds to window resizing and changes in screen orientation. If you
 			calcFontSizes();
 			
 
-	   $('.quarter-height').viewportScale('25vh,25vw');
+ 	   $('.quarter-height').viewportScale('25vh,25vw');
+	 
+ 		 $('.quarter-width-height').viewportScale({
+ 			 height: '25vw',
+ 			 width: '25vw'
+ 		 });
+	 
+ 		 $('.fifth-width-height-vmax-fontsize').viewportScale({
+ 			 height: '30vmax',
+ 			 width: '20vmax',
+ 			 'font-size': '1.5vmax'
+ 		 });
+	 
+ 		 $('.fit-text').viewportScale({
+ 			 height: '10vw',
+ 			 width: '60vw',
+ 			 'font-size': '2vw'
+ 		 });
 		 
-		 $('.quarter-width-height').viewportScale({
-			 height: '25vw',
-			 width: '25vw'
-		 });
-		 
-		 $('.fifth-width-height-vmax-fontsize').viewportScale({
-			 height: '30vmax',
-			 width: '20vmax',
-			 'font-size': '1.5vmax'
-		 });
-		 
-		 $('.fit-text').viewportScale({
-			 height: '10vw',
-			 width: '60vw',
-			 'font-size': '2vw'
-		 });
+		 setTimeout(function(){
+			 var msg = "";
+			 if ($('body').hasClass('vh-supported')) {
+				 msg = "Good viewport unit support";
+			 } else if ($('body').hasClass('vh-checked') == false) {
+				 msg = "Viewport unit check failed";
+			 } else {
+			 		msg = "Incomplete viewport unit support";
+			 }
+			 $('#viewport-info').html(msg);
+		 },2000);
 		 		 
 	});
 
