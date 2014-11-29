@@ -1,7 +1,7 @@
-/* viewportScale v0.2 | Author: Neil Gardner, 2014 | License: GPL */
+/* viewportScale v0.3 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
 
-	$.fn.viewportScale = function(units,resizeOn){
+	$.fn.viewportScale = function(units,resizeOn,skipDetection){
 		
 			var element = this, 
 				numEls = 0,
@@ -11,7 +11,38 @@
 				wmin=0,
 				wmax=0,
 				props={},
-				unitRgx = new RegExp('\\b(\\d+(\\.\\d+)*)\\s*(v([wh]|max|min))');
+				unitRgx = new RegExp('\\b(\\d+(\\.\\d+)*)\\s*(v([wh]|max|min))'),
+				supported = false;
+
+			var detectSupport = function() {
+				var div = div = $('<div />'),className = 'vh-checked', b = $('body');
+				if (b.hasClass('vh-checked') == false) {
+					wh = $(window).outerHeight();
+					if (div.length>0) {
+						b.append(div);
+						div.css({position:'fixed',height:'100vh','font-size':'2vh','z-index':-2000});
+						supported = div.outerHeight() > (wh * 0.95) && div.outerHeight() < (wh * 1.05);
+						if (supported) {
+							var fsPx = div.css('font-size'),fract = 0;
+							if (fsPx) {
+								fsPx = fsPx.replace(/[a-z]/g,'');
+								if ($.isNumeric(fsPx)) {
+									fsPx = fsPx - 0; 
+									fract = (wh / fsPx);
+									supported = (fract > 49 && fract < 51);
+								}
+							}
+						}
+						div.remove();
+						if (supported) {
+							className += ' vh-supported';
+						}
+						b.addClass(className);
+					}
+				} else {
+					supported = b.hasClass('vh-supported');
+				}
+			}
 
 			// Fetch window size on initial page load and subsequent resizing
 			var gaugeWindowSize = function() {
@@ -95,7 +126,10 @@
 				numEls = element.length,
 				valid = false;
 				if (numEls>0) {
-					if (typeof units == 'string') {
+					if (!skipDetection) {
+						detectSupport();
+					}
+					if (!supported && typeof units == 'string') {
 						units = units.toLowerCase();
 						var parts = units.split(','),i=0,prop;
 						for (; i < parts.length;i++) {
