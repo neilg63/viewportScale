@@ -7,7 +7,11 @@ In <em>fluid design</em>, the width of HTML elements can always be calculated in
 
 When applied to <em>font-sizes</em>, viewport width (vw) is a lightweight alternative to <strong>fit-text</strong> scripts to ensure text always occupies approximately the same proportion of the screen width and thus take up the same number of lines.
 
-The plugin does not detect browser support for viewport units, as some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.
+<h3>Browser Support Detection</h3>
+
+The plugin can optionally run a basic viewport unit support test. This will only run once as it adds two class names to the HTML body tag. 
+
+Some common browsers such as IOS Safari before version 7 and Internet Explorer before version 10 provide partial support. The test ensures a hidden element sized in <em>vh</em> matches its expected size based on viewport height. See <a href="http://caniuse.com/#feat=viewport-units">Can I Use Viewport units</a> for more detailed analysis.
 
 For a practical example please view this simple <a href="http://multifaceted.info/demos/viewport-scale/demo/">demo</a> .
 
@@ -19,6 +23,15 @@ As of November 2014, the latest official version of all major browsers support v
 
 Before the introduction of CSS viewport units, browsers did not consistently distinguish between window width with or without scrollbars. Most mobile browsers and some desktop browsers hide scrollbars when not scrolling and thus report Javascript's window.outerWidth to be exactly 100vw. However, most desktop browsers subtract the scrollbar width from this value. As a result, 100% of window width is always not the same as 100vw. If you wish to ensure exact compatibility with W3C definition of viewport width, please include Tyson Matanich's 
 <a href="https://github.com/tysonmatanich/viewportSize">viewportSize</a>. This is not necessary if you require only viewport heights (vh) or do not mind discrepencies in viewport width when scrollbars are always present.
+
+<h3>Requirements<h3>
+	
+<ol>
+	<li>jQuery 1.7+, jQuery 2.* and hopefully jQUery 3.*</li>
+	<li>Optionally load the viewportSize script first. This adds a new window.viewportSize object</li>
+	<li>Load the viewportScale plugin </li>
+	<li>Use it in your custom javascript within a jQuery context.</li>
+</ol>
 
 <h2>How it works<h3>
 
