@@ -195,6 +195,9 @@ article#explanation pre {
 			<li>width: 25% view width</li>
 			<li>height: 25% viewport width</li>
 		</ul>
+		<p id="browser-support-info">
+			
+		</p>
 	</div>
 	
 	<div class="box fifth-width-height-vmax-fontsize">
@@ -436,17 +439,21 @@ To suppress this test and always apply inline translated pixel-based styles, you
  		 });
 		 
 		 setTimeout(function(){
-			 var msg = "",vui=$('#viewport-info');
+			 var msg = "",strInfo = "", vui=$('#viewport-info');
 			 if (vui.length>0) {
 				 vui.hide();
+				 bsi = $('#browser-support-info');
 				 if ($('body').hasClass('vh-supported')) {
 					 msg = "Good viewport unit support";
+					 strInfo = "Your browser supports viewport units correctly. However, other browsers may need this plugin.";
 				 } else if ($('body').hasClass('vh-checked') == false) {
 					 msg = "Viewport unit check failed";
+					 strInfo = "Your browser does not supports viewport units and may need this plugin to harness the full power of this new CSS standard";
 				 } else {
 				 		msg = "Incomplete viewport unit support";
 				 }
 				 vui.html(msg).fadeIn(1000);
+				 bsi.html(strInfo);
 			 }
 		 },500);
 		 		 
