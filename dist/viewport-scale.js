@@ -1,4 +1,4 @@
-/* viewportScale v0.4.0 | Author: Neil Gardner, 2014 | License: GPL */
+/* viewportScale v0.4.1 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
 
 	$.fn.viewportScale = function(units,options){
@@ -17,7 +17,7 @@
 			
 			var settings = $.extend({
 					resize: true,
-          detect: 'strict',
+          detect: 'full',
       }, options );
 
 			var detectSupport = function() {
@@ -27,7 +27,7 @@
 					gaugeWindowSize();
 					_gauged = true;
 					if (div.length>0) {
-						if (typeof units == 'string') {
+						if (typeof units == 'string' && settings.detect != 'strict') {
 							settings.detect = 'basic';
 						}
 						b.append(div);
@@ -43,21 +43,24 @@
 									ds = ds - 0; 
 									fract = (wh / ds);
 									supported = (fract > 49 && fract < 51);
+									if (supported) {
+										className += ' vh-supported';
+									}
 									if (settings.detect != 'basic' && supported) {
 										ds = div.outerWidth();
 										supported = ds > ((wmax / 2)*0.95) && ds < ((wmax / 2)*1.05);
+										if (supported) {
+											className += ' vmax-supported';
+										}
 									}
 								}
 							}
 						}
 						div.remove();
-						if (supported) {
-							className += ' vh-supported';
-						}
 						b.addClass(className);
 					}
 				} else {
-					supported = b.hasClass('vh-supported');
+					supported = settings.detect == 'basic'? b.hasClass('vh-supported') : b.hasClass('vmax-supported');
 				}
 			}
 
