@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "description": "Simple jQuery plugin to support viewport units (vw,vh,vmax,vmin) in older browsers.",
   "author": "https://github.com/neilg63",
-  "license": "GPL",
+  "license": "MIT/GPL",
   "homepage": "https://github.com/neilg63/viewportScale",
   "main": "./dist/sortable.js",
   "dependencies": {
