@@ -1,4 +1,4 @@
-/* viewportScale v0.4.1 | Author: Neil Gardner, 2014 | License: GPL */
+/* viewportScale v0.5.0 | Author: Neil Gardner, 2014 | License: GPL */
 (function($) {
 
 	$.fn.viewportScale = function(units,options){
@@ -16,10 +16,12 @@
 				_gauged = false;
 			
 			var settings = $.extend({
-					resize: true,
-          detect: 'full',
-      }, options );
-
+					resize: true, // respond to window resize / orientation change events
+		          detect: 'full', // full | basic | strict full = detect vmax/vmin support, basic = only vw/vh support | scrict = enforce full compliance even if vmax not specified
+		          sizeMode: 'auto', // auto|mobile|desktop Determines method used to gauge viewport height, for desktop window.height without status bars, for mobile screen.height. In auto mode initial 
+		          maxMobileHeight: 480 // max window height at which a device is considered mobile in auto mode
+		      }, options );
+			
 			var detectSupport = function() {
 				var b = $('body');
 				if (b.hasClass('vh-checked') == false) {
@@ -67,12 +69,28 @@
 			// Fetch window size on initial page load and subsequent resizing
 			var gaugeWindowSize = function() {
 				// support for ViewportSize plugin
-				if (window.viewportSize) {
-					ww = window.viewportSize.getWidth();
-					wh = window.viewportSize.getHeight();
-				} else {
-					ww = $(window).outerWidth();
-					wh = $(window).outerHeight();
+				if (settings.sizeMode != 'mobile') {
+					if (window.viewportSize) {
+						ww = window.viewportSize.getWidth();
+						wh = window.viewportSize.getHeight();
+					} else {
+						ww = $(window).outerWidth();
+						wh = $(window).outerHeight();
+					}
+					if (settings.sizeMode == 'auto' && wh <= settings.maxMobileHeight) {
+						settings.sizeMode = 'mobile';
+					}
+				}
+				if (settings.sizeMode == 'mobile') {
+					if (settings.sizeMode) {
+						if (window.orientation%180 >= 45) {
+							ww = screen.height;
+							wh = screen.width;
+						} else {
+							ww = screen.width;
+							wh = screen.height;
+						}
+					}
 				}
 				if (wh > ww) {
 					wmax = wh;
