@@ -82,7 +82,7 @@
 					}
 				}
 				if (settings.sizeMode == 'mobile') {
-					if (window.orientation%180 >= 45) {
+					if (Math.abs(window.orientation%180) >= 45) {
 						ww = screen.height;
 						wh = screen.width;
 					} else {
