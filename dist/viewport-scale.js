@@ -82,14 +82,12 @@
 					}
 				}
 				if (settings.sizeMode == 'mobile') {
-					if (settings.sizeMode) {
-						if (window.orientation%180 >= 45) {
-							ww = screen.height;
-							wh = screen.width;
-						} else {
-							ww = screen.width;
-							wh = screen.height;
-						}
+					if (window.orientation%180 >= 45) {
+						ww = screen.height;
+						wh = screen.width;
+					} else {
+						ww = screen.width;
+						wh = screen.height;
 					}
 				}
 				if (wh > ww) {
