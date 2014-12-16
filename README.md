@@ -65,9 +65,14 @@ If you need to target a large set of HTML objects matching one or more CSS paths
 <dl>
 	<dt>resize:</dt><dd>Default = <strong>true</strong>, to disable automatic resizing of inline styles applied by this plugin on window resize enter <strong>false</strong>.</dd>
 	<dt>detect:</dt><dd>Default = <strong>'full'</strong>, unless only simplified string syntax is used in the first parameter, in which case only a basic test is run. Use 'skip' to suppress browser detection altogether. To enforce full suppprt detection even with simplified vw/vh syntax, specify <em>'strict'</em> for this option.</dd>
+	<dt>sizeMode:</dt><dd>Default = <strong>'auto'</strong>, define whether the initial viewport size detection script should be based on application window height, as is preferable in a desktop environment or on screen height, as is preferable for mobile device in which the browser is usually fullscreen except when nagivation controls are displayed. Auto mode assumes if the initial window height is below a certain value (480 by default) it should assume screen height is the better unit, although this may include some smaller desktop/laptop screens. In 'mobile' mode screen height is enforced and in desktop mode, only true window height is considered. You can use a third party deivce  detection script to apply the best setting.</dd>
+	<dt>maxMobileHeight:</dt><dd>Default = <strong>480</strong>, define the maximum initial window height at which a device is considered mobile. We recommend using a device detection script.</dd>
 </dl>
 
-For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:
+<h4>iOS Screen Height Issue</h4>
+<p>iOS subtracts the navigation bar from the window height, even if its hidden on page load. As a result only screen.height is a reliable measure for such devices.</p>
+<h4>Basic Usage</h4>
+<p>For basic usage when applying viewport height or width to CSS height or width properties, you need only add a comma separated string:</p>
 
 <pre>
 	/* Exactly 80% of viewport height irrespective of page length
