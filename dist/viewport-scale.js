@@ -1,4 +1,4 @@
-/* viewportScale v0.5.0 | Author: Neil Gardner, 2014 | License: MIT/GPL */
+/* viewportScale v0.5.1 | Author: Neil Gardner, 2014 | License: MIT/GPL */
 (function($) {
 
 	$.fn.viewportScale = function(units,options){
@@ -36,7 +36,7 @@
 						var attrs = {position:'fixed',height:'100vh','font-size':'2vh',width:'50vmax','z-index':-2000,padding:0}, ds=0;
 						div.css(attrs);
 						ds = div.outerHeight();
-						supported = ds > (wh * 0.95) && ds < (wh * 1.05);
+						supported = ds > (wh * 0.85) && ds < (wh * 1.15);
 						if (supported) {
 							ds = div.css('font-size'),fract = 0;
 							if (ds) {
@@ -44,7 +44,7 @@
 								if ($.isNumeric(ds)) {
 									ds = ds - 0; 
 									fract = (wh / ds);
-									supported = (fract > 49 && fract < 51);
+									supported = (fract > 42.5 && fract < 52.5);
 									if (supported) {
 										className += ' vh-supported';
 									}
@@ -69,20 +69,27 @@
 			// Fetch window size on initial page load and subsequent resizing
 			var gaugeWindowSize = function() {
 				// support for ViewportSize plugin
+				var flipOrient = false;
+				if (window.orientation) {
+					flipOrient = Math.abs(window.orientation%180) >= 45;
+				}
 				if (settings.sizeMode != 'mobile') {
 					if (window.viewportSize) {
 						ww = window.viewportSize.getWidth();
-						wh = window.viewportSize.getHeight();
 					} else {
 						ww = $(window).outerWidth();
-						wh = $(window).outerHeight();
+					}
+					if (window.innerHeight) {
+						wh = window.innerHeight;
+					} else {
+						wh = document.documentElement.clientHeight;
 					}
 					if (settings.sizeMode == 'auto' && wh <= settings.maxMobileHeight) {
 						settings.sizeMode = 'mobile';
 					}
 				}
 				if (settings.sizeMode == 'mobile') {
-					if (Math.abs(window.orientation%180) >= 45) {
+					if (flipOrient) {
 						ww = screen.height;
 						wh = screen.width;
 					} else {
@@ -90,6 +97,8 @@
 						wh = screen.height;
 					}
 				}
+				//wh = (window.innerHeight + wh) / 2
+				
 				if (wh > ww) {
 					wmax = wh;
 					wmin = ww;
