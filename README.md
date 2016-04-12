@@ -33,7 +33,7 @@ Before the introduction of CSS viewport units, browsers did not consistently dis
 	<li>Use it in your custom javascript within a jQuery context.</li>
 </ol>
 
-<h2>How it works<h3>
+<h3>How it works</h3>
 
 On initial page load the script gauges the correct window height and width (optionally with the aid of viewportSize to gauge correct viewport width without scrollbars). It then translates these into pixel values for the following properties:
 
